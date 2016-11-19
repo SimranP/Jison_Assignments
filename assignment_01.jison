@@ -35,7 +35,7 @@
 %start expressions
 %%
 
-expressions : e EOF { console.log("Result: ", representation($$,[])); return $$; };
+expressions : e EOF { console.log("Result: ", representation($$,[])); return representation($$,[]) };
 
 e :   e '+' e  { $$ = [$1, $2, $3] } |
 	  e '-' e  { $$ = [$1, $2, $3] } | 
