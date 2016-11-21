@@ -13,20 +13,6 @@
 
 /lex
 
-%{
-	function representation(array, result){
-		result.push('[');
-		array.forEach(function(item){
-			if(item instanceof Array)
-				result = representation(item, result)
-			else 
-				result.push(item);
-		})
-		result.push(']');
-		return result;
-	}	
-%}
-
 %left '-'
 %left '+'
 %left '*'
@@ -35,7 +21,7 @@
 %start expressions
 %%
 
-expressions : e EOF { console.log("Result: ", representation($$,[])); return representation($$,[]) };
+expressions : e EOF { return $$ };
 
 e :   e '+' e  { $$ = [$1, $2, $3] } |
 	  e '-' e  { $$ = [$1, $2, $3] } | 
