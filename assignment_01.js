@@ -13,4 +13,4 @@ var represent = function(tree){
 
 module.exports = represent;
 var tree = parser.parse(process.argv[2]);
-console.log(represent(tree));
+console.log(represent(tree[0]));

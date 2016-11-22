@@ -1,35 +1,58 @@
-/* express any given mathematical expression with appropriate parenthesis. */
-
 %lex
 %%
 
-\s+	 	 	/*skip*/
+\s+	 	 	/*skip whitespace*/
 [0-9]+   	return 'NUMBER'
+[a-z]+   	return 'VAR'
 "+"			return '+'
 "-"			return '-'
 "*"			return '*'
 "/"			return '/'
+";"			return 'SEMICOLON'
+"="			return 'ASSIGNMENT_OPERATOR'
 <<EOF>>  	return 'EOF'
 
 /lex
 
 %{
-	var Node = require("/Users/simranpal/workspace/Jison_Assignments/tree_utils.js").Node;	
-	var LeafNode = require("/Users/simranpal/workspace/Jison_Assignments/tree_utils.js").LeafNode;	
+	var Node = require(process.cwd() + "/tree_utils.js").Node;
+	var LeafNode = require(process.cwd() + "/tree_utils.js").LeafNode;
 %}
 
+%left 'SEMICOLON'
+%left 'ASSIGNMENT_OPERATOR'
 %left '-'
 %left '+'
 %left '*'
 %left '/'
 
-%start expressions
+%start statement
 %%
 
-expressions : e EOF { return $$ };
+statement 
+	: 
+	expressions EOF { console.log($1); return $$ };
 
-e :   e '+' e  { $$ = new Node($2,[$1,$3]) } |
-	  e '-' e  { $$ = new Node($2,[$1,$3]) } | 
-	  e '*' e  { $$ = new Node($2,[$1,$3]) } | 
-	  e '/' e  { $$ = new Node($2,[$1,$3]) } | 
-	 NUMBER { $$ =  new LeafNode($1)};
+expressions 
+	: expressions expression SEMICOLON {$1.push($2);}
+	| expressions assignment_expression SEMICOLON {$1.push($2);;}
+	| expressions expression {$1.push($2);;}
+	| {$$ = []};
+
+expression 
+	: expression '+' expression 
+		{ $$ = new Node($2,[$1,$3]); }
+	| expression '-' expression 
+		{ $$ = new Node($2,[$1,$3]); }
+	| expression '*' expression 
+		{ $$ = new Node($2,[$1,$3]); }
+	| expression '/' expression 
+		{ $$ = new Node($2,[$1,$3]); }
+	| NUMBER { $$ = new LeafNode($1,'Number') } 
+	| value;
+
+assignment_expression
+	: VAR ASSIGNMENT_OPERATOR expression { $$ =  new Node($2,[$1,$3]) };
+
+value
+	: VAR { $$ = new LeafNode($1,'Identifier') };

@@ -14,8 +14,5 @@ var wordify = function(tree) {
 	},[]);
 }
 
-
-
-
 var tree = parser.parse(process.argv[2]);
-console.log(wordify(represent(tree)).join(" "));
+console.log(wordify(represent(tree[0])).join(" "));
