@@ -13,6 +13,11 @@
 
 /lex
 
+%{
+	var Node = require("/Users/simranpal/workspace/Jison_Assignments/tree_utils.js").Node;	
+	var LeafNode = require("/Users/simranpal/workspace/Jison_Assignments/tree_utils.js").LeafNode;	
+%}
+
 %left '-'
 %left '+'
 %left '*'
@@ -23,8 +28,8 @@
 
 expressions : e EOF { return $$ };
 
-e :   e '+' e  { $$ = [$1, $2, $3] } |
-	  e '-' e  { $$ = [$1, $2, $3] } | 
-	  e '*' e  { $$ = [$1, $2, $3] } | 
-	  e '/' e  { $$ = [$1, $2, $3] } | 
-	 NUMBER;
+e :   e '+' e  { $$ = new Node($2,[$1,$3]) } |
+	  e '-' e  { $$ = new Node($2,[$1,$3]) } | 
+	  e '*' e  { $$ = new Node($2,[$1,$3]) } | 
+	  e '/' e  { $$ = new Node($2,[$1,$3]) } | 
+	 NUMBER { $$ =  new LeafNode($1)};

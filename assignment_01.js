@@ -4,18 +4,13 @@ var jison = require("jison");
 var bnf = fs.readFileSync("parse_tree.jison", "utf8");
 var parser = new jison.Parser(bnf);
 
-function representation(array, result){
-        result.push('[');
-        array.forEach(function(item){
-            if(item instanceof Array)
-                result = representation(item, result)
-            else 
-                result.push(item);
-        })
-        result.push(']');
-        return result;
+var represent = function(tree){
+	if(!tree.children) return tree.root;
+	var leftChild = represent(tree.children[0]);
+	var rightChild = represent(tree.children[1]); 
+	return ['['].concat(leftChild).concat(tree.root).concat(rightChild).concat(']');
 }
 
+module.exports = represent;
 var tree = parser.parse(process.argv[2]);
-console.log(representation(tree,[]));
-module.exports = representation;
+console.log(represent(tree));
