@@ -17,6 +17,10 @@ var addSyntax = {
 
 	"Identifier": function(expression){
 		return "console.log("+expression+");";
+	},
+
+	"Number": function(expression){
+		return "console.log("+expression+");";
 	}
 }
 var generate = function(expression) {
