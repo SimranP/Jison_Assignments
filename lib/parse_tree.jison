@@ -10,6 +10,7 @@
 "/"			return '/'
 ";"			return 'SEMICOLON'
 "="			return 'ASSIGNMENT_OPERATOR'
+"^"			return 'EXPONENT'	
 <<EOF>>  	return 'EOF'
 
 /lex
@@ -25,6 +26,7 @@
 %left '+'
 %left '*'
 %left '/'
+%left 'EXPONENT'
 
 %start statement
 %%
@@ -47,6 +49,8 @@ expression
 	| expression '*' expression 
 		{ $$ = new Node($2,[$1,$3]); }
 	| expression '/' expression 
+		{ $$ = new Node($2,[$1,$3]); }
+	| expression EXPONENT expression 
 		{ $$ = new Node($2,[$1,$3]); }
 	| NUMBER { $$ = new LeafNode($1,'Number') } 
 	| value;
