@@ -42,30 +42,30 @@ statement
 
 expressions 
 	: expressions expression SEMICOLON {$1.addNode($2);}
-	| expressions assignment_expression SEMICOLON {$1.addNode($2);;}
-	| expressions expression {$1.addNode($2);;}
+	| expressions assignment_expression SEMICOLON {$1.addNode($2);}
+	| expressions expression {$1.addNode($2);}
 	| {$$ = new Tree();};
 
 expression 
 	: expression '+' expression 
-		{ $$ = new Node($2,[$1,$3]); }
+		{ $$ = new Node($2,[$1,$3],"Arithmetic Expression"); }
 	| expression '-' expression 
-		{ $$ = new Node($2,[$1,$3]); }
+		{ $$ = new Node($2,[$1,$3],"Arithmetic Expression"); }
 	| expression '*' expression 
-		{ $$ = new Node($2,[$1,$3]); }
+		{ $$ = new Node($2,[$1,$3],"Arithmetic Expression"); }
 	| expression '/' expression 
-		{ $$ = new Node($2,[$1,$3]); }
+		{ $$ = new Node($2,[$1,$3],"Arithmetic Expression"); }
 	| expression EXPONENT expression 
-		{ $$ = new Node($2,[$1,$3]); }
+		{ $$ = new Node($2,[$1,$3],"Arithmetic Expression"); }
 	| expression '!' 
-		{ $$ = new Node($2,[$1]); }
+		{ $$ = new Node($2,[$1],"Arithmetic Expression"); }
 	| expression '%' 
-		{ $$ = new Node($2,[$1]); }
+		{ $$ = new Node($2,[$1],"Arithmetic Expression"); }
 	| NUMBER { $$ = new LeafNode($1,'Number') } 
 	| value;
 
 assignment_expression
-	: VAR ASSIGNMENT_OPERATOR expression { $$ =  new Node($2,[$1,$3]) };
+	: value ASSIGNMENT_OPERATOR expression { $$ =  new Node($2,[$1,$3],"Assignment Expression") };
 
 value
 	: VAR { $$ = new LeafNode($1,'Identifier') };
