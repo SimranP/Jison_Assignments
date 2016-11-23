@@ -8,6 +8,7 @@
 "-"			return '-'
 "*"			return '*'
 "/"			return '/'
+"!"			return '!'
 ";"			return 'SEMICOLON'
 "="			return 'ASSIGNMENT_OPERATOR'
 "^"			return 'EXPONENT'	
@@ -27,6 +28,9 @@
 %left '*'
 %left '/'
 %left 'EXPONENT'
+%right '!'
+%right '%'
+
 
 %start statement
 %%
@@ -52,6 +56,10 @@ expression
 		{ $$ = new Node($2,[$1,$3]); }
 	| expression EXPONENT expression 
 		{ $$ = new Node($2,[$1,$3]); }
+	| expression '!' 
+		{ $$ = new Node($2,[$1]); }
+	| expression '%' 
+		{ $$ = new Node($2,[$1]); }
 	| NUMBER { $$ = new LeafNode($1,'Number') } 
 	| value;
 
