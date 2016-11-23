@@ -18,6 +18,7 @@
 
 %{
 	var Node = require(process.cwd() + "/lib/tree_utils.js").Node;
+	var Tree = require(process.cwd() + "/lib/tree_utils.js").Tree;
 	var LeafNode = require(process.cwd() + "/lib/tree_utils.js").LeafNode;
 %}
 
@@ -40,10 +41,10 @@ statement
 	expressions EOF { return $$ };
 
 expressions 
-	: expressions expression SEMICOLON {$1.push($2);}
-	| expressions assignment_expression SEMICOLON {$1.push($2);;}
-	| expressions expression {$1.push($2);;}
-	| {$$ = []};
+	: expressions expression SEMICOLON {$1.addNode($2);}
+	| expressions assignment_expression SEMICOLON {$1.addNode($2);;}
+	| expressions expression {$1.addNode($2);;}
+	| {$$ = new Tree();};
 
 expression 
 	: expression '+' expression 
