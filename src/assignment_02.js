@@ -2,8 +2,8 @@ var inWordsEn = require("in-words").en;
 var represent =  require("./assignment_01.js");
 
 var wordify = function(tree) {	
-	var array = represent(tree);
-	var operators = {"+":"plus","-":"minus","/":"divided by","*":"times","[": "(","]":")","=": "equals"};
+	var array = represent(tree,{open:"(",close:")"});
+	var operators = {"+":"plus","-":"minus","/":"divided by","*":"times","=": "equals"};
 	return array.reduce(function(result,item){
 		!operators[item] ? 
 			!Number(item) ?  
