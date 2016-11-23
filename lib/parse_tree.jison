@@ -17,8 +17,8 @@
 /lex
 
 %{
-	var Node = require(process.cwd() + "/tree_utils.js").Node;
-	var LeafNode = require(process.cwd() + "/tree_utils.js").LeafNode;
+	var Node = require(process.cwd() + "/lib/tree_utils.js").Node;
+	var LeafNode = require(process.cwd() + "/lib/tree_utils.js").LeafNode;
 %}
 
 %left 'SEMICOLON'
@@ -37,7 +37,7 @@
 
 statement 
 	: 
-	expressions EOF { console.log($1); return $$ };
+	expressions EOF { return $$ };
 
 expressions 
 	: expressions expression SEMICOLON {$1.push($2);}
