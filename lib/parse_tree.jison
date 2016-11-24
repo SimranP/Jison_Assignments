@@ -9,6 +9,8 @@
 "*"			return '*'
 "/"			return '/'
 "!"			return '!'
+"("			return '('
+")"			return ')'
 ";"			return 'SEMICOLON'
 "="			return 'ASSIGNMENT_OPERATOR'
 "^"			return 'EXPONENT'	
@@ -55,12 +57,13 @@ expression
 		{ $$ = new Node($2,[$1,$3],"Arithmetic Expression"); }
 	| expression '/' expression 
 		{ $$ = new Node($2,[$1,$3],"Arithmetic Expression"); }
+	| expression '%' expression 
+		{ $$ = new Node($2,[$1,$3],"Arithmetic Expression"); }
 	| expression EXPONENT expression 
 		{ $$ = new Node($2,[$1,$3],"Arithmetic Expression"); }
 	| expression '!' 
 		{ $$ = new Node($2,[$1],"Arithmetic Expression"); }
-	| expression '%' 
-		{ $$ = new Node($2,[$1],"Arithmetic Expression"); }
+	| '(' expression ')' { $$ = $2 }
 	| NUMBER { $$ = new LeafNode($1,'Number') } 
 	| value;
 

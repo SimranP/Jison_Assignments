@@ -42,4 +42,4 @@ describe("generate", function() {
 
 		assert.deepEqual(expected,actual);
 	});
-});
+});	

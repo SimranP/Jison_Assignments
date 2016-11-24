@@ -14,6 +14,11 @@ describe("evaluate", function() {
 		assert.equal(-400,evaluate(expression));
 	});
 
+	it("should return result of given expression consisting more than one assignment", function() {
+		var expression = "x=10;\ny=20;\nz=30;\n(x^2)+(y^2)-(z^2);";
+		assert.equal(-400,evaluate(expression));
+	});
+
 	it("should throw an error identifier is missing", function() {
 		var expression = "x^2;x=10;";
 		assert.throws(function(){evaluate(expression)}, Error, "x is not defined.");

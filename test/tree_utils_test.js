@@ -40,9 +40,9 @@ describe('Node', function() {
       	assert.equal(5040,tree.evaluate());
     });
 
-    it('should return result of operation for PercentageOperatorNode', function() {
+    it('should return result of operation for ModuloOperatorNode', function() {
 		var tree =  new Node("%",[new LeafNode('7','Number'),new LeafNode('4','Number')]);    	
-      	assert.equal(0.28,tree.evaluate());
+      	assert.equal(3,tree.evaluate());
     });
   });
 });
