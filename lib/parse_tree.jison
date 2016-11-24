@@ -14,6 +14,7 @@
 ";"			return 'SEMICOLON'
 "="			return 'ASSIGNMENT_OPERATOR'
 "^"			return 'EXPONENT'	
+"%"			return '%'	
 <<EOF>>  	return 'EOF'
 
 /lex

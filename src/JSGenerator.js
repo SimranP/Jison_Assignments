@@ -1,6 +1,5 @@
 var fs = require("fs");
 var jison = require("jison");
-var represent =  require("./assignment_01.js");
 
 var bnf = fs.readFileSync(process.cwd()+"/lib/parse_tree.jison", "utf8");
 var parser = new jison.Parser(bnf);
@@ -16,17 +15,18 @@ var addSyntax = {
 	},
 
 	"Identifier": function(expression){
-		return "console.log("+expression+");";
+		return this["Arithmetic Expression"](expression);
 	},
 
 	"Number": function(expression){
-		return "console.log("+expression+");";
+		return this["Arithmetic Expression"](expression);
 	}
 }
+
 var generate = function(expression) {
 	var statements = parser.parse(expression).nodes;
 	var code = statements.map(function(statement){
-		return addSyntax[statement.type](represent(statement,{}).join(""));
+		return addSyntax[statement.type](statement.toSyntax().join(""));
 	});
 	return code.join("\n");
 }
