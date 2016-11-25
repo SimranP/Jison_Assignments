@@ -35,4 +35,24 @@ describe("evaluate", function() {
 		var expression = "x=2;x=2^5;x;";
 		assert.equal(32,evaluate(expression));
 	});
+
+	it("should evaluate a number as an expression", function() {
+		var expression = "3;";
+		assert.equal(3,evaluate(expression));
+	});
+
+	// *** assignment_06 ***
+
+	describe.skip("decison-making statements",function() {
+		it("should evaluate expression if condition is true", function() {
+			var expression = "if true { 3; }";
+			assert.equal(3,evaluate(expression));
+		});
+
+		it("should not evaluate expression if condition is false", function() {
+			var expression = "if false { 3; }";
+			assert.equal(3,evaluate(expression));
+		});
+	})
+
 });
