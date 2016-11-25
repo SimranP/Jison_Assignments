@@ -43,15 +43,15 @@ describe("evaluate", function() {
 
 	// *** assignment_06 ***
 
-	describe.skip("decison-making statements",function() {
+	describe("decison-making statements",function() {
 		it("should evaluate expression if condition is true", function() {
-			var expression = "if true { 3; }";
+			var expression = "if true { 3; };";
 			assert.equal(3,evaluate(expression));
 		});
 
 		it("should not evaluate expression if condition is false", function() {
-			var expression = "if false { 3; }";
-			assert.equal(3,evaluate(expression));
+			var expression = "if false { 3; };";
+			assert.equal(false,evaluate(expression));
 		});
 	})
 
