@@ -3,7 +3,6 @@
 
 \s+	 	 	/*skip whitespace*/
 [0-9]+   	return 'NUMBER'
-[a-z]+   	return 'VAR'
 "+"			return '+'
 "-"			return '-'
 "*"			return '*'
@@ -15,6 +14,12 @@
 "="			return 'ASSIGNMENT_OPERATOR'
 "^"			return 'EXPONENT'	
 "%"			return '%'	
+"if"        return 'if'
+"{"         return '{'
+"}"         return '}'
+"true"      return 'true'
+"false"     return 'false'
+[a-z]+   	return 'VAR'
 <<EOF>>  	return 'EOF'
 
 /lex
@@ -33,7 +38,7 @@
 %left '/'
 %left 'EXPONENT'
 %right '!'
-%right '%'
+%left '%'
 
 
 %start statement
@@ -44,9 +49,9 @@ statement
 	expressions EOF { return $$ };
 
 expressions 
-	: expressions expression SEMICOLON {$1.addNode($2);}
+	: expressions expression {$1.addNode($2);}
 	| expressions assignment_expression SEMICOLON {$1.addNode($2);}
-	| expressions expression {$1.addNode($2);}
+	| expressions dcm_block {$1.addTree($2);}
 	| {$$ = new Tree();};
 
 expression 
@@ -65,6 +70,7 @@ expression
 	| expression '!' 
 		{ $$ = new Node($2,[$1],"Arithmetic Expression"); }
 	| '(' expression ')' { $$ = $2 }
+	| expression SEMICOLON
 	| NUMBER { $$ = new LeafNode($1,'Number') } 
 	| value;
 
@@ -73,3 +79,15 @@ assignment_expression
 
 value
 	: VAR { $$ = new LeafNode($1,'Identifier') };
+
+dcm_block
+	: 'if' logical_expression '{' expression '}'  SEMICOLON
+		{	
+			$$ = new Tree();
+			$$.addNode(new Node($1,[$2,$4],"Decision-Making"));
+		};
+
+logical_expression
+	: 'true'	{ $$ = new LeafNode($1,'Boolean') }
+	| 'false'	{ $$ = new LeafNode($1,'Boolean') }
+	; 
