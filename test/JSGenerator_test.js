@@ -98,4 +98,20 @@ describe("generate", function() {
 
 		assert.deepEqual(expected,actual);
 	});
+
+	it("should return equivalent javascript code for given if statement", function() {
+		var expected = "if(true) { \nconsole.log(3);\n};";
+		var expression = "if true { 3; };";
+		var actual = generate(expression);
+
+		assert.deepEqual(expected,actual);
+	});
+
+	it("should return equivalent javascript code for given decision making statement", function() {
+		var expected = "if(true) { \nvar a=3;\nconsole.log(a+3);\n};";
+		var expression = "if true { a=3; a+3; };";
+		var actual = generate(expression);
+
+		assert.deepEqual(expected,actual);
+	});
 });	

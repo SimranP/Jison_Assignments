@@ -53,6 +53,35 @@ describe("evaluate", function() {
 			var expression = "if false { 3; };";
 			assert.equal(false,evaluate(expression));
 		});
-	})
 
+		it("should evaluate expression if condition is true", function() {
+			var expression = "a=4;if true { a; };";
+			assert.equal(4,evaluate(expression));
+		});
+
+		it("should evaluate expression for == operator", function() {
+			var expression = "if 4==4 { 4; };";
+			assert.equal(4,evaluate(expression));
+		});
+
+		it("should evaluate expression for < operator", function() {
+			var expression = "if 3<4 { 4; };";
+			assert.equal(4,evaluate(expression));
+		});
+
+		it("should evaluate expression for > operator", function() {
+			var expression = "if 5>4 { 4; };";
+			assert.equal(4,evaluate(expression));
+		});
+
+		it("should evaluate expression for >= operator", function() {
+			var expression = "if 5>=4 { 4; };";
+			assert.equal(4,evaluate(expression));
+		});
+
+		it("should evaluate expression for <= operator", function() {
+			var expression = "if 4<=4 { 4; };";
+			assert.equal(4,evaluate(expression));
+		});
+	})
 });

@@ -73,6 +73,18 @@ describe("tree_utils",function() {
           assert.equal(3,tree.evaluate());
       });
 
+      it("should return result of operation for IfNode for true", function() {
+          var tree = new Tree();
+          tree.addNode(new Node("if",[new LeafNode("true","Boolean"),new LeafNode("3","Number")]));
+          assert.equal(3,tree.evaluate());
+      });
+
+      it("should return result of operation for IfNode for false", function() {
+          var tree = new Tree();
+          tree.addNode(new Node("if",[new LeafNode("falses","Boolean"),new LeafNode("3","Number")]));
+          assert.equal(false,tree.evaluate());
+      });
+
       it("should throw an error when identifier has no value",function(){
           var tree = new Tree();
           tree.addNode(new LeafNode("r","Identifier"));
